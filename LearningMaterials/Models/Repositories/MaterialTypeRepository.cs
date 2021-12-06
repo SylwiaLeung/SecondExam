@@ -1,6 +1,7 @@
 using LearningMaterials.Data;
 using LearningMaterials.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,9 +16,11 @@ namespace LearningMaterials.Models
             _context = context;
         }
 
-        public Task Create(MaterialType materialType)
+        public async Task Create(MaterialType materialType)
         {
-            throw new System.NotImplementedException();
+            if (materialType is null) throw new ArgumentNullException(nameof(materialType));
+
+            await _context.MaterialTypes.AddAsync(materialType);
         }
 
         public void Delete(MaterialType materialType)
