@@ -1,4 +1,6 @@
+using LearningMaterials.Data;
 using LearningMaterials.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,19 +8,30 @@ namespace LearningMaterials.Models
 {
     public class MaterialTypeRepository : IMaterialTypeRepository
     {
-        public Task Create(MaterialType obj)
+        private readonly MaterialsDbContext _context;
+
+        public MaterialTypeRepository(MaterialsDbContext context)
+        {
+            _context = context;
+        }
+
+        public Task Create(MaterialType materialType)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Delete(MaterialType obj)
+        public void Delete(MaterialType materialType)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<MaterialType>> GetAll()
+        public async Task<IEnumerable<MaterialType>> GetAll()
         {
-            throw new System.NotImplementedException();
+            var materialTypes = await _context
+                .MaterialTypes
+                .ToListAsync();
+
+            return materialTypes;
         }
 
         public Task<MaterialType> GetSingle(int id)
@@ -26,12 +39,12 @@ namespace LearningMaterials.Models
             throw new System.NotImplementedException();
         }
 
-        public Task SaveAsync()
+        public void Update(MaterialType materialType)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(MaterialType obj)
+        public Task SaveAsync()
         {
             throw new System.NotImplementedException();
         }
