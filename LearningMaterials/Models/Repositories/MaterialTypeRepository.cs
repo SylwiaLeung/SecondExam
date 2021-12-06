@@ -25,7 +25,9 @@ namespace LearningMaterials.Models
 
         public void Delete(MaterialType materialType)
         {
-            throw new System.NotImplementedException();
+            if (materialType is null) throw new ArgumentNullException(nameof(materialType));
+
+            _context.Remove(materialType);
         }
 
         public async Task<IEnumerable<MaterialType>> GetAll()
@@ -51,9 +53,9 @@ namespace LearningMaterials.Models
             throw new System.NotImplementedException();
         }
 
-        public Task SaveAsync()
+        public async Task SaveAsync()
         {
-            throw new System.NotImplementedException();
+            await _context.SaveChangesAsync();
         }
     }
 }

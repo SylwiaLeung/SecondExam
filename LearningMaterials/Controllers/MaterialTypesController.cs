@@ -59,5 +59,19 @@ namespace LearningMaterials.Controllers
 
             return CreatedAtRoute(nameof(GetMaterialType), new { Id = materialTypeDto.Id }, materialTypeDto);
         }
+
+        //DELETE api/materialtypes/1
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMaterialType([FromRoute] int id)
+        {
+            var materialTypeFromDb = _repository.GetSingle(id).Result;
+
+            if (materialTypeFromDb is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
+
+            _repository.Delete(materialTypeFromDb);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
     }
 }
