@@ -26,7 +26,7 @@ namespace LearningMaterials.Controllers
         {
             var author = await _repository.GetSingle(id);
 
-            if (author is null) return NotFound();
+            if (author is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
 
             var authorDto = _mapper.Map<AuthorReadDto>(author);
 
@@ -39,7 +39,7 @@ namespace LearningMaterials.Controllers
         {
             var authors = await _repository.GetAll();
 
-            if (authors is null) return NotFound();
+            if (authors is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
 
             var authorDtos = _mapper.Map<List<AuthorReadDto>>(authors);
 
@@ -67,11 +67,18 @@ namespace LearningMaterials.Controllers
 
         //}
 
-        ////DELETE api/authors/1
-        //[HttpDelete("{id}")]
-        //public ActionResult DeleteAuthor([FromRoute] int id)
-        //{
+        //DELETE api/authors/1
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAuthor([FromRoute] int id)
+        {
+            var authorFromDb = _repository.GetSingle(id).Result;
 
-        //}
+            if (authorFromDb is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
+
+            _repository.Delete(authorFromDb);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
     }
 }

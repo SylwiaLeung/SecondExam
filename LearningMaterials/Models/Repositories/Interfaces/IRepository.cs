@@ -9,7 +9,7 @@ namespace LearningMaterials.Models
         Task<T> GetSingle(int id);
         Task Create(T obj);
         Task Update(T obj);
-        Task Delete(T obj);
+        void Delete(T obj);
         Task PartialUpdate(T obj);
         Task SaveAsync();
     }

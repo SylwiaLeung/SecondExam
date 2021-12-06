@@ -23,9 +23,11 @@ namespace LearningMaterials.Models
             await _context.Authors.AddAsync(author);
         }
 
-        public Task Delete(Author obj)
+        public void Delete(Author author)
         {
-            throw new System.NotImplementedException();
+            if (author is null) throw new ArgumentNullException(nameof(author));
+
+            _context.Remove(author);
         }
 
         public async Task<IEnumerable<Author>> GetAll()
