@@ -52,7 +52,7 @@ namespace LearningMaterials.Controllers
 
             if (query.SortByDate == true)
             {
-                return Ok(baseQuery.OrderBy(m => m.PublishDate));
+                return Ok(baseQuery.OrderByDescending(m => m.PublishDate));
             }
 
             return Ok(baseQuery);
