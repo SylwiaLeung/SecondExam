@@ -1,4 +1,5 @@
 using LearningMaterials.Data;
+using LearningMaterials.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,8 @@ namespace LearningMaterials
             services.AddScoped<MaterialsSeeder>();
 
             services.AddControllers();
+
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddSwaggerGen(c =>
             {
