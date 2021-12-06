@@ -24,11 +24,11 @@ namespace LearningMaterials
             await _context.Materials.AddAsync(material);
         }
 
-        public void Delete(Material materialType)
+        public void Delete(Material material)
         {
-            if (materialType is null) throw new ArgumentNullException(nameof(materialType));
+            if (material is null) throw new ArgumentNullException(nameof(material));
 
-            _context.Remove(materialType);
+            _context.Remove(material);
         }
 
         public async Task<IEnumerable<Material>> GetAll()
