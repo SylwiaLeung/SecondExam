@@ -1,5 +1,8 @@
-﻿using LearningMaterials.Entities;
+﻿using LearningMaterials.Data;
+using LearningMaterials.Entities;
 using LearningMaterials.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,34 +10,54 @@ namespace LearningMaterials
 {
     public class MaterialRepository : IMaterialRepository
     {
-        public Task Create(Material obj)
+        private readonly MaterialsDbContext _context;
+
+        public MaterialRepository(MaterialsDbContext context)
         {
-            throw new System.NotImplementedException();
+            _context = context;
         }
 
-        public void Delete(Material obj)
+        public async Task Create(Material material)
         {
-            throw new System.NotImplementedException();
+            if (material is null) throw new ArgumentNullException(nameof(material));
+
+            await _context.Materials.AddAsync(material);
         }
 
-        public Task<IEnumerable<Material>> GetAll()
+        public void Delete(Material materialType)
         {
-            throw new System.NotImplementedException();
+            if (materialType is null) throw new ArgumentNullException(nameof(materialType));
+
+            _context.Remove(materialType);
         }
 
-        public Task<Material> GetSingle(int id)
+        public async Task<IEnumerable<Material>> GetAll()
         {
-            throw new System.NotImplementedException();
+            var materials = await _context
+                .Materials
+                .Include(m => m.Reviews)
+                .ToListAsync();
+
+            return materials;
         }
 
-        public Task SaveAsync()
+        public async Task<Material> GetSingle(int id)
         {
-            throw new System.NotImplementedException();
+            var material = await _context
+                .Materials
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            return material;
         }
 
-        public void Update(Material obj)
+        public void Update(Material material)
         {
-            throw new System.NotImplementedException();
+            _context.Update(material);
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
