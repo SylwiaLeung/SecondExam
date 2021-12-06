@@ -18,11 +18,11 @@ namespace LearningMaterials.Data
         {
             if (_context.Database.CanConnect())
             {
-                //if (!_context.Roles.Any())
-                //{
-                //    _context.Roles.AddRange(GetRoles());
-                //    _context.SaveChanges();
-                //}
+                if (!_context.Roles.Any())
+                {
+                    _context.Roles.AddRange(GetRoles());
+                    _context.SaveChanges();
+                }
                 if (!_context.Authors.Any())
                 {
                     _context.Authors.AddRange(GetAuthors());
@@ -44,6 +44,22 @@ namespace LearningMaterials.Data
                     _context.SaveChanges();
                 }
             }
+        }
+
+        private IEnumerable<Role> GetRoles()
+        {
+            List<Role> roles = new()
+            {
+                new Role()
+                {
+                    Name = "User"
+                },
+                new Role()
+                {
+                    Name = "Admin"
+                }
+            };
+            return roles;
         }
 
         private IEnumerable<Author> GetAuthors()
@@ -197,21 +213,5 @@ namespace LearningMaterials.Data
             };
             return reviews;
         }
-
-        //private IEnumerable<Role> GetRoles()
-        //{
-        //    List<Role> roles = new()
-        //    {
-        //        new Role()
-        //        {
-        //            Name = "User"
-        //        },
-        //        new Role()
-        //        {
-        //            Name = "Admin"
-        //        }
-        //    };
-        //    return roles;
-        //}
     }
 }
