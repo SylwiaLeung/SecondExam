@@ -22,15 +22,28 @@ namespace LearningMaterials.Controllers
 
         //GET api/materialtypes/1
         [HttpGet("{id}", Name = "GetMaterialType")]
-        public async Task<ActionResult<AuthorReadDto>> GetMaterialType([FromRoute] int id)
+        public async Task<ActionResult<MaterialTypeReadDto>> GetMaterialType([FromRoute] int id)
         {
             var materialType = await _repository.GetSingle(id);
 
             if (materialType is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
 
-            var materialTypeDto = _mapper.Map<materialTypeReadDto>(materialType);
+            var materialTypeDto = _mapper.Map<MaterialTypeReadDto>(materialType);
 
             return Ok(materialTypeDto);
+        }
+
+        //GET api/materialtypes/
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MaterialTypeReadDto>>> GetMaterialTypes()
+        {
+            var materialTypes = await _repository.GetAll();
+
+            if (materialTypes is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
+
+            var materialTypeDtos = _mapper.Map<List<AuthorReadDto>>(materialTypes);
+
+            return Ok(materialTypeDtos);
         }
     }
 }

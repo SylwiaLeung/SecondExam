@@ -34,9 +34,13 @@ namespace LearningMaterials.Models
             return materialTypes;
         }
 
-        public Task<MaterialType> GetSingle(int id)
+        public async Task<MaterialType> GetSingle(int id)
         {
-            throw new System.NotImplementedException();
+            var materialType = await _context
+                .MaterialTypes
+                .FirstOrDefaultAsync(mt => mt.Id == id);
+
+            return materialType;
         }
 
         public void Update(MaterialType materialType)
