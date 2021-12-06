@@ -1,6 +1,7 @@
 using AutoMapper;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace LearningMaterials.Controllers
 {
     [Route("api/reviews")]
     [ApiController]
+    [Authorize]
     public class ReviewsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -62,6 +64,7 @@ namespace LearningMaterials.Controllers
 
         //DELETE api/reviews/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteReview([FromRoute] int id)
         {
             var reviewFromDb = _repository.GetSingle(id).Result;

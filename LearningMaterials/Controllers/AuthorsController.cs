@@ -1,6 +1,7 @@
 using AutoMapper;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace LearningMaterials.Controllers
 {
     [Route("api/authors")]
     [ApiController]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -48,6 +50,7 @@ namespace LearningMaterials.Controllers
 
         //POST api/authors
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<AuthorReadDto>> CreateAuthor([FromBody] AuthorCreateDto createDto)
         {
             var authorModel = _mapper.Map<Author>(createDto);
@@ -62,6 +65,7 @@ namespace LearningMaterials.Controllers
 
         //PUT api/authors/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateAuthor([FromRoute] int id, [FromBody] AuthorUpdateDto updateDto)
         {
             var authorModel = _repository.GetSingle(id).Result;
@@ -78,6 +82,7 @@ namespace LearningMaterials.Controllers
 
         //DELETE api/authors/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteAuthor([FromRoute] int id)
         {
             var authorFromDb = _repository.GetSingle(id).Result;

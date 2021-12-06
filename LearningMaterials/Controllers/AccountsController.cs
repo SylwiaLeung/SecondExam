@@ -1,4 +1,5 @@
 using LearningMaterials.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace LearningMaterials.Controllers
         }
 
         [HttpPost("register")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> RegisterUser([FromBody] RegisterUserDto dto)
         {
             await _accountRepository.RegisterUser(dto);

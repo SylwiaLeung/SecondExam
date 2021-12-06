@@ -1,6 +1,7 @@
 using AutoMapper;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace LearningMaterials.Controllers
 {
     [Route("api/materialtypes")]
     [ApiController]
+    [Authorize]
     public class MaterialTypesController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -48,6 +50,7 @@ namespace LearningMaterials.Controllers
 
         //POST api/materialtypes
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<MaterialTypeReadDto>> CreateMaterialType([FromBody] MaterialTypeCreateDto createDto)
         {
             var materialTypeModel = _mapper.Map<MaterialType>(createDto);
@@ -62,6 +65,7 @@ namespace LearningMaterials.Controllers
 
         //DELETE api/materialtypes/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteMaterialType([FromRoute] int id)
         {
             var materialTypeFromDb = _repository.GetSingle(id).Result;
@@ -76,6 +80,7 @@ namespace LearningMaterials.Controllers
 
         //PUT api/materialtypes/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateMaterialType([FromRoute] int id, [FromBody] MaterialTypeUpdateDto updateDto)
         {
             var materialTypeModel = _repository.GetSingle(id).Result;
