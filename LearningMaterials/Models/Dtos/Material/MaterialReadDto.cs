@@ -15,7 +15,6 @@ namespace LearningMaterials.Models
         public string AuthorName { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public DateTime PublishDate { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using LearningMaterials.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace LearningMaterials.Models
 {
@@ -8,7 +8,12 @@ namespace LearningMaterials.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int MaterialCount { get; }
+        public int MaterialCount { 
+            get 
+            {
+                return Materials.Count();
+            }
+        }
         public IEnumerable<MaterialReadDto> Materials { get; set; }
     }
 }

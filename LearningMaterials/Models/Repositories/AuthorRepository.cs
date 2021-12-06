@@ -35,6 +35,9 @@ namespace LearningMaterials.Models
             var authors = await _context
                 .Authors
                 .Include(a => a.Materials)
+                .ThenInclude(m => m.MaterialType)
+                .Include(a => a.Materials)
+                .ThenInclude(m => m.Reviews)
                 .ToListAsync();
 
             return authors;
@@ -45,6 +48,9 @@ namespace LearningMaterials.Models
             var author = await _context
                 .Authors
                 .Include(a => a.Materials)
+                .ThenInclude(m => m.MaterialType)
+                .Include(a => a.Materials)
+                .ThenInclude(m => m.Reviews)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
             return author;

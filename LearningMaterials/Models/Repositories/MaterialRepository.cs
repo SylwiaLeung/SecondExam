@@ -35,6 +35,7 @@ namespace LearningMaterials
         {
             var materials = await _context
                 .Materials
+                .Include(m => m.Reviews)
                 .Include(m => m.Author)
                 .Include(m => m.MaterialType)
                 .ToListAsync();
@@ -46,6 +47,7 @@ namespace LearningMaterials
         {
             var material = await _context
                 .Materials
+                .Include(m => m.Reviews)
                 .Include(m => m.Author)
                 .Include(m => m.MaterialType)
                 .FirstOrDefaultAsync(m => m.Id == id);
