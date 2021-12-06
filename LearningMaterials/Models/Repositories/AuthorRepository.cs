@@ -1,10 +1,19 @@
+using LearningMaterials.Data;
 using LearningMaterials.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace LearningMaterials.Models
 {
     public class AuthorRepository : IAuthorRepository
     {
+        private readonly MaterialsDbContext _context;
+
+        public AuthorRepository(MaterialsDbContext context)
+        {
+            _context = context;
+        }
+
         public void Create(Author obj)
         {
             throw new System.NotImplementedException();
@@ -15,9 +24,14 @@ namespace LearningMaterials.Models
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Author> GetAll()
+        public async IEnumerable<Author> GetAll()
         {
-            throw new System.NotImplementedException();
+            var authors = await _context
+                .Authors
+                .Include(a => a.Materials)
+                .ToListAsync();
+
+            return authors;
         }
 
         public Author GetSingle(int id)

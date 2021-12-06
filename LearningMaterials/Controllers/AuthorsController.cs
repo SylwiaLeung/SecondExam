@@ -29,7 +29,13 @@ namespace LearningMaterials.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<AuthorReadDto>> GetAuthors()
         {
+            var authors = _repository.GetAll();
 
+            if (authors is null) return NotFound();
+
+            var authorDtos = _mapper.Map<List<AuthorReadDto>>(authors);
+
+            return Ok(authorDtos);
         }
 
         //POST api/authors
