@@ -78,7 +78,7 @@ namespace LearningMaterials.Controllers
             _repository.Update(authorModel);
             await _repository.SaveAsync();
 
-            return NoContent();
+            return Ok(new Response { Status = "Success", Message = "Data successfully updated" });
         }
 
         //DELETE api/authors/1
@@ -93,7 +93,7 @@ namespace LearningMaterials.Controllers
             _repository.Delete(authorFromDb);
             await _repository.SaveAsync();
 
-            return NoContent();
+            return Ok(new Response { Status = "Success", Message = "Data successfully deleted" });
         }
 
         [HttpPatch("{id}")]
@@ -115,7 +115,7 @@ namespace LearningMaterials.Controllers
             _repository.Update(authorToUpdate);
             await _repository.SaveAsync();
 
-            return NoContent();
+            return Ok(new Response { Status = "Success", Message = "Data successfully updated" });
         }
     }
 }

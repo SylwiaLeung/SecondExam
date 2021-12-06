@@ -17,12 +17,12 @@ namespace LearningMaterials.Controllers
         }
 
         [HttpPost("register")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> RegisterUser([FromBody] RegisterUserDto dto)
         {
             await _accountRepository.RegisterUser(dto);
 
-            return Ok();
+            return Ok(new Response { Status = "Success", Message = "User successfully registered" });
         }
 
         [HttpPost("login")]

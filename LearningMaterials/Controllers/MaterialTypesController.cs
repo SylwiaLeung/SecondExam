@@ -75,7 +75,7 @@ namespace LearningMaterials.Controllers
             _repository.Delete(materialTypeFromDb);
             await _repository.SaveAsync();
 
-            return NoContent();
+            return Ok(new Response { Status = "Success", Message = "Data successfully deleted" });
         }
 
         //PUT api/materialtypes/1
@@ -92,7 +92,7 @@ namespace LearningMaterials.Controllers
             _repository.Update(materialTypeModel);
             await _repository.SaveAsync();
 
-            return NoContent();
+            return Ok(new Response { Status = "Success", Message = "Data successfully updated" });
         }
     }
 }
