@@ -1,6 +1,9 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using LearningMaterials.Data;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
+using LearningMaterials.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -53,12 +56,13 @@ namespace LearningMaterials
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtDetails.JwtKey)),
                 };
             });
+            services.AddScoped<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
 
             services.AddDbContext<MaterialsDbContext>(options => options.UseSqlServer
                 (Configuration.GetConnectionString("MaterialsConStr")));
             services.AddScoped<MaterialsSeeder>();
 
-            services.AddControllers().AddNewtonsoftJson(s =>
+            services.AddControllers().AddFluentValidation().AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
@@ -70,7 +74,8 @@ namespace LearningMaterials
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
 
-            services.AddScoped<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
+            services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+            services.AddScoped<IValidator<MaterialsQueryModel>, MaterialsQueryValidator>();
 
             services.AddSwaggerGen(c =>
             {
