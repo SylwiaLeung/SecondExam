@@ -1,6 +1,7 @@
 using LearningMaterials.Data;
 using LearningMaterials.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,9 +16,11 @@ namespace LearningMaterials.Models
             _context = context;
         }
 
-        public Task Create(Author obj)
+        public async Task Create(Author author)
         {
-            throw new System.NotImplementedException();
+            if (author is null) throw new ArgumentNullException(nameof(author));
+
+            await _context.Authors.AddAsync(author);
         }
 
         public Task Delete(Author obj)
@@ -50,9 +53,9 @@ namespace LearningMaterials.Models
             throw new System.NotImplementedException();
         }
 
-        public Task Save()
+        public async Task SaveAsync()
         {
-            throw new System.NotImplementedException();
+            await _context.SaveChangesAsync();
         }
 
         public Task Update(Author obj)

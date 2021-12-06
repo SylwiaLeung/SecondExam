@@ -11,6 +11,6 @@ namespace LearningMaterials.Models
         Task Update(T obj);
         Task Delete(T obj);
         Task PartialUpdate(T obj);
-        Task Save();
+        Task SaveAsync();
     }
 }

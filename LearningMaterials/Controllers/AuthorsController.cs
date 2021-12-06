@@ -1,4 +1,5 @@
 using AutoMapper;
+using LearningMaterials.Entities;
 using LearningMaterials.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace LearningMaterials.Controllers
         }
 
         //GET api/authors/1
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetAuthor")]
         public async Task<ActionResult<AuthorReadDto>> GetAuthor([FromRoute] int id)
         {
             var author = await _repository.GetSingle(id);
@@ -45,12 +46,19 @@ namespace LearningMaterials.Controllers
             return Ok(authorDtos);
         }
 
-        ////POST api/authors
-        //[HttpPost]
-        //public ActionResult<AuthorReadDto> CreateAuthor([FromBody] AuthorCreateDto createDto)
-        //{
+        //POST api/authors
+        [HttpPost]
+        public async Task<ActionResult<AuthorReadDto>> CreateAuthor([FromBody] AuthorCreateDto createDto)
+        {
+            var authorModel = _mapper.Map<Author>(createDto);
 
-        //}
+            await _repository.Create(authorModel);
+            await _repository.SaveAsync();
+
+            var authorDto = _mapper.Map<AuthorReadDto>(authorModel);
+
+            return CreatedAtRoute(nameof(GetAuthor), new { Id = authorDto.Id }, authorDto);
+        }
 
         ////PUT api/authors/1
         //[HttpPut("{id}")]
