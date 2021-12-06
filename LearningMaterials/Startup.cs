@@ -1,23 +1,12 @@
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using LearningMaterials.Data;
-using LearningMaterials.Entities;
 using LearningMaterials.Middleware;
 using LearningMaterials.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.IO;
-using System.Reflection;
-using System.Text;
 
 namespace LearningMaterials
 {
@@ -40,13 +29,7 @@ namespace LearningMaterials
 
             services.AddPersistanceLayer(Configuration, this);
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Learning Materials API", Version = "v1" });
-                var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
-                options.IncludeXmlComments(filePath);
-            });
+            services.AddSwaggerski();
 
             services.AddCorsPolicy();
         }

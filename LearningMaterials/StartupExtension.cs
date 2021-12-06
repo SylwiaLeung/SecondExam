@@ -1,4 +1,3 @@
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using LearningMaterials.Data;
 using LearningMaterials.Entities;
@@ -8,8 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace LearningMaterials
@@ -68,6 +70,17 @@ namespace LearningMaterials
                     .AllowAnyHeader()
                     .AllowAnyOrigin()
                     );
+            });
+        }
+
+        public static void AddSwaggerski(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Learning Materials API", Version = "v1" });
+                var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
+                options.IncludeXmlComments(filePath);
             });
         }
     }

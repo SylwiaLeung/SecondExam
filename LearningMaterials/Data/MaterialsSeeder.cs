@@ -1,5 +1,4 @@
 using LearningMaterials.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -107,7 +106,7 @@ namespace LearningMaterials.Data
             };
             return materialTypes;
         }
-        
+
         private IEnumerable<Material> GetMaterials()
         {
             List<Material> materials = new()

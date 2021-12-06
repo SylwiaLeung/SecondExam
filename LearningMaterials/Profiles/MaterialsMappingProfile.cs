@@ -1,7 +1,6 @@
 using AutoMapper;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
-using System.Linq;
 
 namespace LearningMaterials.Profiles
 {
