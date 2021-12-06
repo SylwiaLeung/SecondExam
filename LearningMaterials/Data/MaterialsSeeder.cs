@@ -38,11 +38,11 @@ namespace LearningMaterials.Data
                     _context.Materials.AddRange(GetMaterials());
                     _context.SaveChanges();
                 }
-                //if (!_context.Reviews.Any())
-                //{
-                //    _context.Reviews.AddRange(GetReviews());
-                //    _context.SaveChanges();
-                //}
+                if (!_context.Reviews.Any())
+                {
+                    _context.Reviews.AddRange(GetReviews());
+                    _context.SaveChanges();
+                }
             }
         }
 
@@ -146,6 +146,56 @@ namespace LearningMaterials.Data
                 },
             };
             return materials;
+        }
+
+        private IEnumerable<Review> GetReviews()
+        {
+            List<Review> reviews = new()
+            {
+                new Review()
+                {
+                    WrittenReview = "Vedi gut yes",
+                    Score = 10,
+                    MaterialId = 2
+                },
+                new Review()
+                {
+                    WrittenReview = "Very explanatory, simple and efficient",
+                    Score = 9,
+                    MaterialId = 2
+                },
+                new Review()
+                {
+                    WrittenReview = "Helped me score my test! Pozdrawiam",
+                    Score = 10,
+                    MaterialId = 2
+                },
+                new Review()
+                {
+                    WrittenReview = "Good",
+                    Score = 6,
+                    MaterialId = 4
+                },
+                new Review()
+                {
+                    WrittenReview = "Now I feel fullfilled",
+                    Score = 10,
+                    MaterialId = 5
+                },
+                new Review()
+                {
+                    WrittenReview = "I want to stay human",
+                    Score = 2,
+                    MaterialId = 5
+                },
+                new Review()
+                {
+                    WrittenReview = "Very nice, good job",
+                    Score = 8,
+                    MaterialId = 3
+                }
+            };
+            return reviews;
         }
 
         //private IEnumerable<Role> GetRoles()
