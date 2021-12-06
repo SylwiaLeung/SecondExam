@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,14 +58,18 @@ namespace LearningMaterials
                 (Configuration.GetConnectionString("MaterialsConStr")));
             services.AddScoped<MaterialsSeeder>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IMaterialTypeRepository, MaterialTypeRepository>();
             services.AddScoped<IMaterialRepository, MaterialRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
-            
+            services.AddScoped<IAccountRepository, AccountRepository>();
+
             services.AddScoped<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
 
             services.AddSwaggerGen(c =>

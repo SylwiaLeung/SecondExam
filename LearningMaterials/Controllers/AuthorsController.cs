@@ -2,6 +2,7 @@ using AutoMapper;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -90,6 +91,28 @@ namespace LearningMaterials.Controllers
             if (authorFromDb is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
 
             _repository.Delete(authorFromDb);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> PartialUpdateAuthor(int id, JsonPatchDocument<AuthorUpdateDto> patchDoc)
+        {
+            var authorToUpdate = await _repository.GetSingle(id);
+
+            if (authorToUpdate is null) return NotFound();
+
+            var authorToPatch = _mapper.Map<AuthorUpdateDto>(authorToUpdate);
+
+            patchDoc.ApplyTo(authorToPatch, ModelState);
+            if (!TryValidateModel(authorToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(authorToPatch, authorToUpdate);
+            _repository.Update(authorToUpdate);
             await _repository.SaveAsync();
 
             return NoContent();

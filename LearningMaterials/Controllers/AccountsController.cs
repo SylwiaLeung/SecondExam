@@ -17,7 +17,7 @@ namespace LearningMaterials.Controllers
         }
 
         [HttpPost("register")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult> RegisterUser([FromBody] RegisterUserDto dto)
         {
             await _accountRepository.RegisterUser(dto);
