@@ -4,6 +4,7 @@ using LearningMaterials.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LearningMaterials.Controllers
@@ -37,7 +38,7 @@ namespace LearningMaterials.Controllers
 
         //GET api/materials
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MaterialReadDto>>> GetMaterials()
+        public async Task<ActionResult<IEnumerable<MaterialReadDto>>> GetMaterials([FromQuery] MaterialsQueryModel query)
         {
             var materials = await _repository.GetAll();
 
@@ -45,7 +46,16 @@ namespace LearningMaterials.Controllers
 
             var materialDtos = _mapper.Map<List<MaterialReadDto>>(materials);
 
-            return Ok(materialDtos);
+            var baseQuery = materialDtos
+                .Where(m => query.SearchPhrase == null
+                || m.MaterialTypeName.ToLower().Contains(query.SearchPhrase.ToLower()));
+
+            if (query.SortByDate == true)
+            {
+                return Ok(baseQuery.OrderBy(m => m.PublishDate));
+            }
+
+            return Ok(baseQuery);
         }
 
         //POST api/materials
