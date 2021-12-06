@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using LearningMaterials.Data;
 using LearningMaterials.Entities;
+using LearningMaterials.Middleware;
 using LearningMaterials.Models;
 using LearningMaterials.Validation;
 using Microsoft.AspNetCore.Builder;
@@ -56,6 +57,8 @@ namespace LearningMaterials
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtDetails.JwtKey)),
                 };
             });
+
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
 
             services.AddDbContext<MaterialsDbContext>(options => options.UseSqlServer
@@ -94,6 +97,8 @@ namespace LearningMaterials
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LearningMaterials v1"));
             }
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthentication();
 
