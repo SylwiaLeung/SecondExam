@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace LearningMaterials.Entities
+namespace LearningMaterials.Models
 {
-    public class Review
+    public class ReviewCreateDto
     {
-        public int Id { get; set; }
-
         [Required]
         public int MaterialId { get; set; }
-        public virtual Material Material { get; set; }
 
         [Required]
         [MaxLength(100, ErrorMessage = "Maximum length of this field cannot exceed 100 characters")]
