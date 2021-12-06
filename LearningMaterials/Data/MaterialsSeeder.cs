@@ -33,11 +33,11 @@ namespace LearningMaterials.Data
                     _context.MaterialTypes.AddRange(GetMaterialTypes());
                     _context.SaveChanges();
                 }
-                //if (!_context.Materials.Any())
-                //{
-                //    _context.Materials.AddRange(GetMaterials());
-                //    _context.SaveChanges();
-                //}
+                if (!_context.Materials.Any())
+                {
+                    _context.Materials.AddRange(GetMaterials());
+                    _context.SaveChanges();
+                }
                 //if (!_context.Reviews.Any())
                 //{
                 //    _context.Reviews.AddRange(GetReviews());
@@ -90,6 +90,62 @@ namespace LearningMaterials.Data
                 }
             };
             return materialTypes;
+        }
+        
+        private IEnumerable<Material> GetMaterials()
+        {
+            List<Material> materials = new()
+            {
+                new Material()
+                {
+                    Title = "What is CORS",
+                    AuthorId = 1,
+                    Description = "Explains what CORS policy is",
+                    Location = "internet",
+                    MaterialTypeId = 1
+                },
+                new Material()
+                {
+                    Title = "Building REST API",
+                    AuthorId = 1,
+                    Description = "Step by step instractional video on building API",
+                    Location = "youtuby",
+                    MaterialTypeId = 2
+                },
+                new Material()
+                {
+                    Title = "Logging in ASP MVC Core",
+                    AuthorId = 1,
+                    Description = "A detaild article on logging and how to implement it",
+                    Location = "internet as well",
+                    MaterialTypeId = 3
+                },
+                new Material()
+                {
+                    Title = "Intro to API",
+                    AuthorId = 1,
+                    Description = "An introductory presentation on API",
+                    Location = "my disc",
+                    MaterialTypeId = 4
+                },
+                new Material()
+                {
+                    Title = "How to become a Shark",
+                    AuthorId = 2,
+                    Description = "Some good advices on how to eat and not be eaten",
+                    Location = "motorola server",
+                    MaterialTypeId = 4
+                },
+                new Material()
+                {
+                    Title = "Motorola's mission",
+                    AuthorId = 2,
+                    Description = "Motorola company structure, philosophy and history",
+                    Location = "motorola server",
+                    MaterialTypeId = 4
+                },
+            };
+            return materials;
         }
 
         //private IEnumerable<Role> GetRoles()
