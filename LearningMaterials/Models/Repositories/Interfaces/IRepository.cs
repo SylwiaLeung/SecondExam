@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LearningMaterials.Models
 {
     public interface IRepository<T>
     {
-        IEnumerable<T> GetAll();
-        T GetSingle(int id);
-        void Create(T obj);
-        void Update(T obj);
-        void Delete(T obj);
-        void PartialUpdate(T obj);
-        void Save();
+        Task<IEnumerable<T>> GetAll();
+        Task<T> GetSingle(int id);
+        Task Create(T obj);
+        Task Update(T obj);
+        Task Delete(T obj);
+        Task PartialUpdate(T obj);
+        Task Save();
     }
 }
