@@ -15,6 +15,12 @@ namespace LearningMaterials.Profiles
             CreateMap<MaterialType, MaterialTypeReadDto>();
             CreateMap<MaterialTypeCreateDto, MaterialType>();
             CreateMap<MaterialTypeUpdateDto, MaterialType>().ReverseMap();
+
+            CreateMap<Material, MaterialReadDto>()
+                .ForMember(m => m.AuthorName, m => m.MapFrom(m => m.Author.Name))
+                .ForMember(m => m.MaterialTypeName, m => m.MapFrom(m => m.MaterialType.Name));
+            CreateMap<MaterialCreateDto, Material>();
+            CreateMap<MaterialUpdateDto, Material>().ReverseMap();
         }
     }
 }
