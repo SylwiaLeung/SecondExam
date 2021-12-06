@@ -1,4 +1,4 @@
-﻿namespace LearningMaterials.Controllers
+﻿namespace LearningMaterials.Models
 {
     public class RegisterUserDto
     {

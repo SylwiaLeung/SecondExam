@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace LearningMaterials.Controllers
+namespace LearningMaterials.Models
 {
     public interface IAccountRepository
     {
