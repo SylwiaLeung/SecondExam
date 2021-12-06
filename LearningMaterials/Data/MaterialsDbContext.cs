@@ -13,5 +13,7 @@ namespace LearningMaterials.Data
         public DbSet<Review> Reviews { get; set; }
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<Material> Materials { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }
