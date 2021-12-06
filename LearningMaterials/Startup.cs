@@ -35,6 +35,7 @@ namespace LearningMaterials
 
             services.AddControllers();
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IAuthorRepository, AuthorRepository>();
 
             services.AddSwaggerGen(c =>
