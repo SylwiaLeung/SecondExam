@@ -50,19 +50,14 @@ namespace LearningMaterials.Models
             return author;
         }
 
-        public Task PartialUpdate(Author obj)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }
 
-        public Task Update(Author obj)
+        public void Update(Author author)
         {
-            throw new System.NotImplementedException();
+            _context.Update(author);
         }
     }
 }

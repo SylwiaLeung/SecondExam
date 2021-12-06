@@ -60,12 +60,21 @@ namespace LearningMaterials.Controllers
             return CreatedAtRoute(nameof(GetAuthor), new { Id = authorDto.Id }, authorDto);
         }
 
-        ////PUT api/authors/1
-        //[HttpPut("{id}")]
-        //public ActionResult<AuthorReadDto> UpdateAuthor([FromRoute] int id, [FromBody] AuthorUpdateDto updateDto)
-        //{
+        //PUT api/authors/1
+        [HttpPut("{id}")]
+        public async Task<ActionResult<AuthorReadDto>> UpdateAuthor([FromRoute] int id, [FromBody] AuthorUpdateDto updateDto)
+        {
+            var authorModel = _repository.GetSingle(id).Result;
 
-        //}
+            if (authorModel is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
+
+            _mapper.Map(updateDto, authorModel);
+
+            _repository.Update(authorModel);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
 
         //DELETE api/authors/1
         [HttpDelete("{id}")]

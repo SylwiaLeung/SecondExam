@@ -8,9 +8,8 @@ namespace LearningMaterials.Models
         Task<IEnumerable<T>> GetAll();
         Task<T> GetSingle(int id);
         Task Create(T obj);
-        Task Update(T obj);
+        void Update(T obj);
         void Delete(T obj);
-        Task PartialUpdate(T obj);
         Task SaveAsync();
     }
 }
