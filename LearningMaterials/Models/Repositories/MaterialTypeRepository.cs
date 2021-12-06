@@ -50,7 +50,7 @@ namespace LearningMaterials.Models
 
         public void Update(MaterialType materialType)
         {
-            throw new System.NotImplementedException();
+            _context.Update(materialType);
         }
 
         public async Task SaveAsync()

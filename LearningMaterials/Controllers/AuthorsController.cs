@@ -62,7 +62,7 @@ namespace LearningMaterials.Controllers
 
         //PUT api/authors/1
         [HttpPut("{id}")]
-        public async Task<ActionResult<AuthorReadDto>> UpdateAuthor([FromRoute] int id, [FromBody] AuthorUpdateDto updateDto)
+        public async Task<ActionResult> UpdateAuthor([FromRoute] int id, [FromBody] AuthorUpdateDto updateDto)
         {
             var authorModel = _repository.GetSingle(id).Result;
 

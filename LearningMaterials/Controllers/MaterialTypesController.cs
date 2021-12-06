@@ -73,5 +73,21 @@ namespace LearningMaterials.Controllers
 
             return NoContent();
         }
+
+        //PUT api/materialtypes/1
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateMaterialType([FromRoute] int id, [FromBody] MaterialTypeUpdateDto updateDto)
+        {
+            var materialTypeModel = _repository.GetSingle(id).Result;
+
+            if (materialTypeModel is null) return NotFound(new Response { Status = "Not Found", Message = "No such data in the database :(" });
+
+            _mapper.Map(updateDto, materialTypeModel);
+
+            _repository.Update(materialTypeModel);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
     }
 }
