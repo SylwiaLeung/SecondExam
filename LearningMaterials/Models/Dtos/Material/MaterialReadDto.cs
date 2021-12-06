@@ -11,10 +11,11 @@ namespace LearningMaterials.Models
         public string Description { get; set; }
         public string Location { get; set; }
         public string MaterialTypeName { get; set; }
-        //public IEnumerable<ReviewReadDto> Reviews { get; set; }
+        public IEnumerable<ReviewReadDto> Reviews { get; set; }
         public string AuthorName { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}")]
         public DateTime PublishDate { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace LearningMaterials.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int MaterialCount { get; }
-        //public IEnumerable<MaterialReadDto> Materials { get; set; }
+        public IEnumerable<MaterialReadDto> Materials { get; set; }
     }
 }
