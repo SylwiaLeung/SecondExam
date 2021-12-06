@@ -81,11 +81,22 @@ namespace LearningMaterials
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LearningMaterials", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("FrontEndClient", builder =>
+                    builder.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MaterialsSeeder seeder)
         {
+            app.UseCors("FrontEndClient");
+
             seeder.Seed();
 
             if (env.IsDevelopment())
