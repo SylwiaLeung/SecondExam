@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace LearningMaterials.Entities
+namespace LearningMaterials.Models
 {
-    public class MaterialType
+    public class MaterialTypeCreateDto
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Maximum length of this field cannot exceed 50 characters")]
         public string Name { get; set; }
