@@ -39,6 +39,8 @@ namespace LearningMaterials
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IMaterialTypeRepository, MaterialTypeRepository>();
             services.AddScoped<IMaterialRepository, MaterialRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+
 
             services.AddSwaggerGen(c =>
             {
