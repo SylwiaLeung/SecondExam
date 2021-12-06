@@ -38,7 +38,7 @@ namespace LearningMaterials
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IMaterialTypeRepository, MaterialTypeRepository>();
-
+            services.AddScoped<IMaterialRepository, MaterialRepository>();
 
             services.AddSwaggerGen(c =>
             {
