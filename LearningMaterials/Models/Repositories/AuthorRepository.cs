@@ -2,6 +2,7 @@ using LearningMaterials.Data;
 using LearningMaterials.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LearningMaterials.Models
 {
@@ -14,17 +15,17 @@ namespace LearningMaterials.Models
             _context = context;
         }
 
-        public void Create(Author obj)
+        public Task Create(Author obj)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Delete(Author obj)
+        public Task Delete(Author obj)
         {
             throw new System.NotImplementedException();
         }
 
-        public async IEnumerable<Author> GetAll()
+        public async Task<IEnumerable<Author>> GetAll()
         {
             var authors = await _context
                 .Authors
@@ -34,22 +35,27 @@ namespace LearningMaterials.Models
             return authors;
         }
 
-        public Author GetSingle(int id)
+        public async Task<Author> GetSingle(int id)
+        {
+            var author = await _context
+                .Authors
+                .Include(a => a.Materials)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            return author;
+        }
+
+        public Task PartialUpdate(Author obj)
         {
             throw new System.NotImplementedException();
         }
 
-        public void PartialUpdate(Author obj)
+        public Task Save()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Save()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(Author obj)
+        public Task Update(Author obj)
         {
             throw new System.NotImplementedException();
         }

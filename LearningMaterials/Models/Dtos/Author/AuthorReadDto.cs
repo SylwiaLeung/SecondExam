@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LearningMaterials.Entities;
+using System.Collections.Generic;
 
 namespace LearningMaterials.Models
 {
