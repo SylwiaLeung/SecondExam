@@ -2,6 +2,7 @@ using AutoMapper;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace LearningMaterials.Controllers
 
         //GET api/reviews/1
         [HttpGet("{id}", Name = "GetReview")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ReviewReadDto>> GetReview([FromRoute] int id)
         {
             var review = await _repository.GetSingle(id);
@@ -37,6 +40,8 @@ namespace LearningMaterials.Controllers
 
         //GET api/reviews
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ReviewReadDto>>> GetReviews()
         {
             var reviews = await _repository.GetAll();
@@ -50,6 +55,8 @@ namespace LearningMaterials.Controllers
 
         //POST api/reviews
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ReviewReadDto>> CreateReview([FromBody] ReviewCreateDto createDto)
         {
             var reviewModel = _mapper.Map<Review>(createDto);
@@ -65,6 +72,8 @@ namespace LearningMaterials.Controllers
         //DELETE api/reviews/1
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteReview([FromRoute] int id)
         {
             var reviewFromDb = _repository.GetSingle(id).Result;
@@ -74,11 +83,13 @@ namespace LearningMaterials.Controllers
             _repository.Delete(reviewFromDb);
             await _repository.SaveAsync();
 
-            return Ok(new Response { Status = "Success", Message = "Data successfully deleted" });
+            return NoContent();
         }
 
         //PUT api/reviews/1
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> UpdateReview([FromRoute] int id, [FromBody] ReviewUpdateDto updateDto)
         {
             var reviewModel = _repository.GetSingle(id).Result;
@@ -90,7 +101,7 @@ namespace LearningMaterials.Controllers
             _repository.Update(reviewModel);
             await _repository.SaveAsync();
 
-            return Ok(new Response { Status = "Success", Message = "Data successfully updated" });
+            return Ok(reviewModel);
         }
     }
 }

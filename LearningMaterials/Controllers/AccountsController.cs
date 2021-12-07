@@ -1,5 +1,6 @@
 using LearningMaterials.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -18,6 +19,8 @@ namespace LearningMaterials.Controllers
 
         [HttpPost("register")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> RegisterUser([FromBody] RegisterUserDto dto)
         {
             await _accountRepository.RegisterUser(dto);
@@ -26,6 +29,8 @@ namespace LearningMaterials.Controllers
         }
 
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Login([FromBody] LoginDto dto)
         {
             string token = await _accountRepository.GenerateJwt(dto);

@@ -78,9 +78,6 @@ namespace LearningMaterials
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Learning Materials API", Version = "v1" });
-                var fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
-                options.IncludeXmlComments(filePath);
             });
         }
     }

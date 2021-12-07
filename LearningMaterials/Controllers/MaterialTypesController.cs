@@ -2,6 +2,7 @@ using AutoMapper;
 using LearningMaterials.Entities;
 using LearningMaterials.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace LearningMaterials.Controllers
 
         //GET api/materialtypes/1
         [HttpGet("{id}", Name = "GetMaterialType")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<MaterialTypeReadDto>> GetMaterialType([FromRoute] int id)
         {
             var materialType = await _repository.GetSingle(id);
@@ -37,6 +40,8 @@ namespace LearningMaterials.Controllers
 
         //GET api/materialtypes
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<MaterialTypeReadDto>>> GetMaterialTypes()
         {
             var materialTypes = await _repository.GetAll();
@@ -51,6 +56,8 @@ namespace LearningMaterials.Controllers
         //POST api/materialtypes
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<MaterialTypeReadDto>> CreateMaterialType([FromBody] MaterialTypeCreateDto createDto)
         {
             var materialTypeModel = _mapper.Map<MaterialType>(createDto);
@@ -66,6 +73,8 @@ namespace LearningMaterials.Controllers
         //DELETE api/materialtypes/1
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteMaterialType([FromRoute] int id)
         {
             var materialTypeFromDb = _repository.GetSingle(id).Result;
@@ -75,12 +84,14 @@ namespace LearningMaterials.Controllers
             _repository.Delete(materialTypeFromDb);
             await _repository.SaveAsync();
 
-            return Ok(new Response { Status = "Success", Message = "Data successfully deleted" });
+            return NoContent();
         }
 
         //PUT api/materialtypes/1
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> UpdateMaterialType([FromRoute] int id, [FromBody] MaterialTypeUpdateDto updateDto)
         {
             var materialTypeModel = _repository.GetSingle(id).Result;
@@ -92,7 +103,7 @@ namespace LearningMaterials.Controllers
             _repository.Update(materialTypeModel);
             await _repository.SaveAsync();
 
-            return Ok(new Response { Status = "Success", Message = "Data successfully updated" });
+            return Ok(materialTypeModel);
         }
     }
 }
